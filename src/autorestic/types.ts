@@ -1,0 +1,14 @@
+
+import { z } from 'zod';
+
+export const BackendsSchema = z.record(z.object({
+  type: z.string(),
+}));
+
+export type Backends = z.infer<typeof BackendsSchema>;
+
+export interface ResticStats {
+  total_size: number;
+  total_file_count: number;
+  snapshot_count: number;
+}
