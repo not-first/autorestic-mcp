@@ -3,7 +3,6 @@ import { getBackends } from './autorestic/config.js';
 import {
   getRepositoryStats,
   getRepositoryStatsInputSchema,
-  // getRepositoryStatsOutputSchema,
 } from './tools/repository-stats.js';
 
 export function createServer(configPath: string) {

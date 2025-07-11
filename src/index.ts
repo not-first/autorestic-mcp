@@ -8,7 +8,6 @@ if (!configPath) {
   process.exit(1);
 }
 
-console.log('Attempting to load config from:', configPath);
 loadBackends(configPath);
 
 const server = createServer(configPath);

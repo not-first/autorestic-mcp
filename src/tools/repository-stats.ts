@@ -1,20 +1,13 @@
 import { z } from 'zod';
 import { getBackends } from '../autorestic/config.js';
 import { executeAutoresticCommand } from '../autorestic/executor.js';
-import { ResticStats } from '../autorestic/types.js';
 import { filesize } from 'filesize';
 
 export const getRepositoryStatsInputSchema = z.object({
   backend_name: z.string().describe('Name of the autorestic backend'),
 });
 
-export const getRepositoryStatsOutputSchema = z.object({
-  total_size: z.string(),
-  total_file_count: z.number(),
-  snapshots_count: z.number(),
-});
-
-export async function getRepositoryStats(input: { backend_name: string; configPath: string }): Promise<z.infer<typeof getRepositoryStatsOutputSchema>> {
+export async function getRepositoryStats(input: { backend_name: string; configPath: string }) {
   const backends = getBackends();
   if (!backends.includes(input.backend_name)) {
     throw new Error(`Backend '${input.backend_name}' not found`);
