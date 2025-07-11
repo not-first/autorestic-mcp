@@ -11,27 +11,28 @@ export function createServer(configPath: string) {
     version: '1.0.0',
   });
 
-  server.registerResource(
-    'list_backends',
-    'autorestic://backends',
+  server.registerTool(
+    'list-backends',
     {
-      title: 'Autorestic Backends',
-      description: 'List of available autorestic backends',
-      mimeType: 'application/json',
+      title: 'List Autorestic Backends',
+      description: 'Lists the available exact referece names for autorestic backends. You MUST call this tool before calling "get-repository-stats" to see available options for backend names.',
     },
-    async () => ({
-      contents: [{
-        uri: 'autorestic://backends',
-        text: JSON.stringify(getBackends()),
-      }],
-    })
+    async () => {
+      const backends = getBackends();
+      return {
+        content: [{
+          type: 'text',
+          text: JSON.stringify({ backends }),
+        }],
+      };
+    }
   );
 
   server.registerTool(
-    'get_repository_stats',
+    'get-repository-stats',
     {
       title: 'Get Repository Stats',
-      description: 'Get statistics for a restic repository backend',
+      description: 'You MUST call "list-backends" first to get the available exact backend reference names.',
       inputSchema: getRepositoryStatsInputSchema.shape,
     },
     async ({ backend_name }) => {

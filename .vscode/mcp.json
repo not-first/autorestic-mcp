@@ -1,0 +1,13 @@
+{
+	"servers": {
+		"autorestic-mcp": {
+			"type": "stdio",
+			"command": "node",
+			"args": [
+				"/home/homelab-admin/autorestic-mcp/build/index.js",
+				"/home/homelab-admin/.autorestic.yml"
+			]
+		}
+	},
+	"inputs": []
+}

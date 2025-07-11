@@ -5,7 +5,6 @@ An MCP (Model Context Protocol) server for managing and querying autorestic back
 ## Overview
 
 This MCP server provides tools for:
-- Listing available autorestic backends
 - Getting repository statistics (size, blob count, etc.)
 
 ## Installation

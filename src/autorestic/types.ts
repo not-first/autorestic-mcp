@@ -2,7 +2,7 @@
 import { z } from 'zod';
 
 export const BackendsSchema = z.record(z.object({
-  type: z.string(),
+  type: z.string().describe("Exact backend_id reference name retrieved from 'list-backends' "),
 }));
 
 export type Backends = z.infer<typeof BackendsSchema>;

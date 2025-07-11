@@ -1,4 +1,3 @@
-
 import { spawn } from 'child_process';
 
 interface ExecResult {
@@ -14,14 +13,17 @@ export async function executeAutoresticCommand(
   timeoutMs = 15000
 ): Promise<ExecResult> {
   return new Promise((resolve, reject) => {
+    // set command and arguments
     const cmd = 'autorestic';
     const fullArgs = ['-c', configPath, 'exec', '-v', '-b', backend, '--', ...args];
+    // spawn child process
     const child = spawn(cmd, fullArgs, { stdio: ['ignore', 'pipe', 'pipe'] });
 
     let stdout = '';
     let stderr = '';
     let finished = false;
 
+    // set timeout for command execution to stop it if it takes too long
     const timer = setTimeout(() => {
       if (!finished) {
         child.kill('SIGKILL');
@@ -30,13 +32,16 @@ export async function executeAutoresticCommand(
       }
     }, timeoutMs);
 
+    // collect stdout data
     child.stdout.on('data', (data) => {
       stdout += data.toString();
     });
+    // collect stderr data
     child.stderr.on('data', (data) => {
       stderr += data.toString();
     });
 
+    // handle process error
     child.on('error', (err) => {
       clearTimeout(timer);
       if (!finished) {
@@ -45,6 +50,7 @@ export async function executeAutoresticCommand(
       }
     });
 
+    // handle process close event
     child.on('close', (code) => {
       clearTimeout(timer);
       if (!finished) {
