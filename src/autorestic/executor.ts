@@ -15,7 +15,7 @@ export async function executeAutoresticCommand(
 ): Promise<ExecResult> {
   return new Promise((resolve, reject) => {
     const cmd = 'autorestic';
-    const fullArgs = ['-c', configPath, 'exec', '-b', backend, '--', ...args];
+    const fullArgs = ['-c', configPath, 'exec', '-v', '-b', backend, '--', ...args];
     const child = spawn(cmd, fullArgs, { stdio: ['ignore', 'pipe', 'pipe'] });
 
     let stdout = '';

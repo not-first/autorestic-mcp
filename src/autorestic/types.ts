@@ -10,5 +10,5 @@ export type Backends = z.infer<typeof BackendsSchema>;
 export interface ResticStats {
   total_size: number;
   total_file_count: number;
-  snapshot_count: number;
+  snapshots_count: number;
 }

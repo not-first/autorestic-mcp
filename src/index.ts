@@ -8,15 +8,9 @@ if (!configPath) {
   process.exit(1);
 }
 
+console.log('Attempting to load config from:', configPath);
 loadBackends(configPath);
 
-async function main() {
-  const server = createServer(configPath);
-  const transport = new StdioServerTransport();
-  await server.connect(transport);
-}
-
-main().catch((err) => {
-  console.error('Server error:', err);
-  process.exit(1);
-});
+const server = createServer(configPath);
+const transport = new StdioServerTransport();
+await server.connect(transport);

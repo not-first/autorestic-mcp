@@ -1,6 +1,10 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { getBackends } from './autorestic/config.js';
-import { repositoryStatsTool } from './tools/repository-stats.js';
+import {
+  getRepositoryStats,
+  getRepositoryStatsInputSchema,
+  // getRepositoryStatsOutputSchema,
+} from './tools/repository-stats.js';
 
 export function createServer(configPath: string) {
   const server = new McpServer({
@@ -29,11 +33,10 @@ export function createServer(configPath: string) {
     {
       title: 'Get Repository Stats',
       description: 'Get statistics for a restic repository backend',
-      inputSchema: repositoryStatsTool.inputSchema.shape,
-      outputSchema: repositoryStatsTool.outputSchema.shape,
+      inputSchema: getRepositoryStatsInputSchema.shape,
     },
     async ({ backend_name }) => {
-      const stats = await repositoryStatsTool.run({ backend_name, configPath });
+      const stats = await getRepositoryStats({ backend_name, configPath });
       return {
         content: [{
           type: 'text',

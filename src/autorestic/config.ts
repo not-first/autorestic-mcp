@@ -1,7 +1,7 @@
 
 import fs from 'fs';
 import yaml from 'yaml';
-import { BackendsSchema, Backends } from './types.js';
+import { BackendsSchema } from './types.js';
 
 let backends: string[] = [];
 
@@ -9,6 +9,10 @@ export function loadBackends(configPath: string): void {
   let fileContent: string;
 
   try {
+    if (!fs.existsSync(configPath)) {
+      throw new Error('Config file does not exist');
+    }
+    const stat = fs.statSync(configPath);
     fileContent = fs.readFileSync(configPath, 'utf8');
   } catch (err) {
     throw new Error('Failed to read config file. Does the file exist?');
