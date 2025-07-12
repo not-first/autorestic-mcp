@@ -1,12 +1,8 @@
 
 import fs from 'fs';
 import yaml from 'yaml';
-import { BackendsSchema } from './types.js';
-
-let backends: string[] = [];
-// full configuration objects for each backend
-let backendsData: Record<string, any> = {};
-
+let backendNames: string[] = [];
+let fullConfig: any = {};
 export function loadBackends(configPath: string): void {
   let fileContent: string;
 
@@ -14,7 +10,6 @@ export function loadBackends(configPath: string): void {
     if (!fs.existsSync(configPath)) {
       throw new Error('Config file does not exist');
     }
-    const stat = fs.statSync(configPath);
     fileContent = fs.readFileSync(configPath, 'utf8');
   } catch (err) {
     throw new Error('Failed to read config file. Does the file exist?');
@@ -27,21 +22,24 @@ export function loadBackends(configPath: string): void {
     throw new Error('Invalid YAML in config');
   }
 
-  const result = BackendsSchema.safeParse(parsed.backends);
-  if (!result.success) {
+  // store only backend names for list-backends
+  if (!parsed.backends || typeof parsed.backends !== 'object') {
     throw new Error('Config validation error: backends section is missing or invalid');
   }
-  // store full backend config and list keys
-  backendsData = result.data;
-  backends = Object.keys(backendsData);
+  backendNames = Object.keys(parsed.backends);
+  // store the full config for repository-config
+  fullConfig = parsed;
 }
 
 export function getBackends(): string[] {
-  return backends;
+  return backendNames;
 }
-// Retrieve configuration for a specific backend
+// Retrieve configuration for a specific backend (returns the backend config from the full file)
 export function getBackendConfig(backendName: string): any {
-  const config = backendsData[backendName];
+  if (!fullConfig.backends || typeof fullConfig.backends !== 'object') {
+    throw new Error('No backends found in config');
+  }
+  const config = fullConfig.backends[backendName];
   if (!config) {
     throw new Error(`Backend '${backendName}' not found`);
   }

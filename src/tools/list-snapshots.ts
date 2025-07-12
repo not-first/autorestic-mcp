@@ -9,7 +9,7 @@ export const listSnapshotsInputSchema = z.object({
 export async function listSnapshots(input: { backend_name: string; configPath: string }) {
   const backends = getBackends();
   if (!backends.includes(input.backend_name)) {
-    throw new Error(`Backend '${input.backend_name}' not found. Use 'list-backends' tool.`);
+    throw new Error(`Backend '${input.backend_name}' not found. Use the 'list-backends' tool to see available backends.`);
   }
   const result = await executeAutoresticCommand(
     input.configPath,

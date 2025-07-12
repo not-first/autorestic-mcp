@@ -10,6 +10,6 @@ export async function getLatestSnapshot(input: { backend_name: string; configPat
   if (!Array.isArray(snaps) || snaps.length === 0) {
     throw new Error('No snapshots found');
   }
-  // assuming snapshots sorted by time desc
+
   return snaps[0];
 }
