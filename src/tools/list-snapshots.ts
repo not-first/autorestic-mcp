@@ -16,10 +16,8 @@ export async function listSnapshots(input: { backend_name: string; configPath: s
     input.backend_name,
     ['snapshots', '--json']
   );
-  try {
-    const parsed = JSON.parse(result.stdout);
-    return parsed.snapshots || parsed;
-  } catch (err) {
-    throw new Error(`Failed to parse snapshots JSON: ${err}`);
+  if (!result.json) {
+    throw new Error('Failed to extract JSON from autorestic output');
   }
+  return result.json;
 }
