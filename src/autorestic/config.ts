@@ -36,6 +36,7 @@ export function loadBackends(configPath: string): void {
 export function getBackends(): string[] {
   return backendNames;
 }
+
 // Retrieve configuration for a specific backend (returns the backend config from the full file)
 export function getBackendConfig(backendName: string): any {
   if (!fullConfig.backends || typeof fullConfig.backends !== 'object') {

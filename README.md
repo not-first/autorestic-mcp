@@ -47,4 +47,3 @@ You can integrate the MCP server into your application using the following confi
 ```
 
 Replace `/path/to/.autorestic.yml` with the path to your Autorestic configuration file.
-

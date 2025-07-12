@@ -8,7 +8,7 @@ import { getLatestSnapshot, getLatestSnapshotInputSchema } from './tools/latest-
 export function createServer(configPath: string) {
   const server = new McpServer({
     name: 'autorestic-mcp',
-    version: '1.0.0',
+    version: '1.2.0',
   });
 
  // list available autorestic backends
