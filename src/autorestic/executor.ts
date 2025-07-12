@@ -8,6 +8,7 @@ export interface ExecResult {
   json?: any;
 }
 
+// the autorestic CLI outputs a bunch of text that isnt needed, so we need to extract the JSON from it
 function extractJson(text: string): any {
   // Find last } or ]
   let endIdx = Math.max(text.lastIndexOf('}'), text.lastIndexOf(']'));

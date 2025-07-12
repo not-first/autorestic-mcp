@@ -11,13 +11,16 @@ export async function listSnapshots(input: { backend_name: string; configPath: s
   if (!backends.includes(input.backend_name)) {
     throw new Error(`Backend '${input.backend_name}' not found. Use the 'list-backends' tool to see available backends.`);
   }
+
   const result = await executeAutoresticCommand(
     input.configPath,
     input.backend_name,
     ['snapshots', '--json']
   );
+
   if (!result.json) {
     throw new Error('Failed to extract JSON from autorestic output');
   }
+
   return result.json;
 }

@@ -1,8 +1,10 @@
 
 import fs from 'fs';
 import yaml from 'yaml';
+
 let backendNames: string[] = [];
 let fullConfig: any = {};
+
 export function loadBackends(configPath: string): void {
   let fileContent: string;
 
