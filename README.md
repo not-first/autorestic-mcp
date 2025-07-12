@@ -30,19 +30,20 @@ npx autorestic-mcp /path/to/.autorestic.yml
 
 ## Example Configuration
 
-You can integrate the MCP server into your application using the following configuration:
+You can integrate the MCP server into any supported services by using their configuration. For VSCode, use:
 
 ```json
 {
-  "mcpServers": {
-    "autorestic": {
-      "command": "npx",
-      "args": [
-        "autorestic-mcp",
-        "/path/to/.autorestic.yml"
-      ]
-    }
-  }
+	"servers": {
+		"autorestic": {
+			"command": "npx",
+			"args": [
+				"autorestic-mcp",
+				"/path/to/.autorestic.yml"
+			],
+			"type": "stdio"
+		}
+	}
 }
 ```
 
