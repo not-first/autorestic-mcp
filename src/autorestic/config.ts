@@ -4,6 +4,8 @@ import yaml from 'yaml';
 import { BackendsSchema } from './types.js';
 
 let backends: string[] = [];
+// full configuration objects for each backend
+let backendsData: Record<string, any> = {};
 
 export function loadBackends(configPath: string): void {
   let fileContent: string;
@@ -29,10 +31,19 @@ export function loadBackends(configPath: string): void {
   if (!result.success) {
     throw new Error('Config validation error: backends section is missing or invalid');
   }
-
-  backends = Object.keys(result.data);
+  // store full backend config and list keys
+  backendsData = result.data;
+  backends = Object.keys(backendsData);
 }
 
 export function getBackends(): string[] {
   return backends;
+}
+// Retrieve configuration for a specific backend
+export function getBackendConfig(backendName: string): any {
+  const config = backendsData[backendName];
+  if (!config) {
+    throw new Error(`Backend '${backendName}' not found`);
+  }
+  return config;
 }

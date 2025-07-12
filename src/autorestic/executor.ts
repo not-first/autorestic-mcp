@@ -1,9 +1,30 @@
 import { spawn } from 'child_process';
 
-interface ExecResult {
+
+export interface ExecResult {
   stdout: string;
   stderr: string;
   code: number;
+  json?: any;
+}
+
+function extractJson(text: string): any {
+  // Find last } or ]
+  let endIdx = Math.max(text.lastIndexOf('}'), text.lastIndexOf(']'));
+  if (endIdx === -1) throw new Error('No JSON object or array end found');
+  let startIdx = endIdx;
+  let braceCount = 0;
+  let openChar = text[endIdx] === '}' ? '{' : '[';
+  let closeChar = text[endIdx];
+  while (startIdx >= 0) {
+    if (text[startIdx] === closeChar) braceCount++;
+    if (text[startIdx] === openChar) braceCount--;
+    if (braceCount === 0 && text[startIdx] === openChar) break;
+    startIdx--;
+  }
+  if (endIdx === -1 || startIdx < 0) throw new Error('Could not find complete JSON object or array in output');
+  const output = text.slice(startIdx, endIdx + 1);
+  return JSON.parse(output);
 }
 
 export async function executeAutoresticCommand(
@@ -58,7 +79,13 @@ export async function executeAutoresticCommand(
         if (code !== 0) {
           reject(new Error(`autorestic exited with code ${code}: ${stderr}`));
         } else {
-          resolve({ stdout, stderr, code: code ?? 0 });
+          let json;
+          try {
+            json = extractJson(stdout);
+          } catch (e: any) {
+            reject(new Error(`Failed to extract JSON from output: ${e.message}`));
+          }
+          resolve({ stdout, stderr, code: code ?? 0, json });
         }
       }
     });
