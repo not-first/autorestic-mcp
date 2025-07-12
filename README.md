@@ -7,7 +7,7 @@ An MCP (Model Context Protocol) server for managing and querying autorestic back
 This MCP server exposes the following tools for interacting with Autorestic repositories:
 
 - **list-backends**: Lists the configured backend names from your Autorestic configuration. Call this first to discover valid backend identifiers.
-- **get-repository-stats**: Retrieves overall repository statistics for a given backend. Supports an optional `stats_mode` parameter (`default` or `restore-size`) to switch between total stats and size required to restore the repository.
+- **get-repository-stats**: Retrieves overall repository statistics for a given backend.
 - **get-repository-config**: Returns the full configuration details for a specific backend, including paths, types, and custom settings defined in `.autorestic.yml`.
 - **list-snapshots**: Lists all snapshots for a backend, returning snapshot IDs, creation timestamps, and metadata.
 - **get-latest-snapshot**: Fetches metadata for the most recent snapshot, including its ID and timestamp.
