@@ -1,0 +1,9 @@
+locations:
+  mydata:
+    from: /path/to/data
+    to: local
+
+backends:
+  local:
+    type: local
+    path: /path/to/backup/location
