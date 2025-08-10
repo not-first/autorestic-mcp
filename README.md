@@ -1,5 +1,8 @@
 # Autorestic MCP Server
 
+> [!IMPORTANT]
+> This MCP server assumes you have correctly set up [autorestic](https://autorestic.vercel.app/) on your machine, and have a valid pre-existing config file.
+
 An MCP (Model Context Protocol) server for managing and querying autorestic backup repositories. This server allows AI language models to easily access information about restic repositories through autorestic's command interface.
 
 ## Available Tools
