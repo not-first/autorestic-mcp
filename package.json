@@ -1,10 +1,10 @@
 {
   "name": "autorestic-mcp",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "type": "module",
   "main": "./build/index.js",
   "bin": {
-    "autorestic-mcp": "./build/index.js"
+    "autorestic-mcp": "build/index.js"
   },
   "scripts": {
     "build": "tsc && chmod +x build/index.js",
