@@ -16,6 +16,8 @@ This MCP server exposes the following tools for interacting with Autorestic repo
 - **get-latest-snapshot**: Fetches metadata for the most recent snapshot, including its ID and timestamp.
 
 ## Usage
+> [!WARNING]
+> These instructions assume you already have [autorestic](https://autorestic.vercel.app/) set up and functioning on your machine. If you don't, see the [full Setup](#full-setup) section.
 
 To install the package globally, run:
 
@@ -51,3 +53,20 @@ You can integrate the MCP server into any supported services by using their conf
 ```
 
 Replace `/path/to/.autorestic.yml` with the path to your Autorestic configuration file.
+
+## Full Setup (For Demo Testing)
+1. Install autorestic using `wget -qO - https://raw.githubusercontent.com/cupcakearmy/autorestic/master/install.sh | bash`
+2. Create a new file in `~/.autorestic.yml` and add this content:
+```yaml
+locations:
+  mydata:
+    from: FOLDER/TO/BACKUP/HERE
+    to: local
+
+backends:
+  local:
+    type: local
+    path: FOLDER/TO/STORE/BACKUPS/HERE
+```
+3. Run `autorestic check` to initialise the restic repository. *Due to a bug in the software, it may add a key called `forgetoption` into your config file. If it does, simply remove it.*
+4. Done! Continue with the usage instructions above.
