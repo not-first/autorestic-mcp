@@ -5,6 +5,11 @@
 
 An MCP (Model Context Protocol) server for managing and querying autorestic backup repositories. This server allows AI language models to easily access information about restic repositories through autorestic's command interface.
 
+### High Seas Demo
+I've been advised to put a nice demo video here showing this project's functionality!
+[Demo Video](https://github.com/user-attachments/assets/158706f2-672a-4bf6-ab7b-1bf86126590c)
+
+
 ## Available Tools
 
 This MCP server exposes the following tools for interacting with Autorestic repositories:
